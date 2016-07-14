@@ -1,0 +1,10 @@
+import turtle
+
+n = int(input("rotations:"))
+g = 134
+l = 120
+
+while n:
+    turtle.left(g)
+    turtle.forward(l)
+    n -= 1
