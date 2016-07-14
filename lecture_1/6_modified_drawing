@@ -1,0 +1,11 @@
+import turtle
+i = 10
+turtle.speed('fastest')
+colors = ["pink", "orange"]
+while True:
+    turtle.color(colors[i % 2])
+    turtle.left(i % 12)
+    turtle.forward(30)
+    turtle.right(i)
+    turtle.backward(10)
+    i+=1
