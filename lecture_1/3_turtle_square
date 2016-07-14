@@ -1,0 +1,13 @@
+import turtle
+
+turtle.speed('fastest')
+
+for i in range(4):
+    if i % 2 == 0:
+        turtle.color("red")
+    else:
+        turtle.color("black")
+    turtle.forward(100)
+    turtle.left(90)
+
+turtle.done()
