@@ -1,0 +1,11 @@
+import turtle as t
+
+length = int(input("lenght:"))
+degrees = int(input("degrees:"))
+
+while 1:
+    t.left(degrees)
+    t.forward(length)
+
+t.done()
+t.exitonclick()
