@@ -1,0 +1,2 @@
+text1 = input("Вход:")
+print(text1[:10],"...")
