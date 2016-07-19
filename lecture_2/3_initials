@@ -1,0 +1,8 @@
+name = input("Име:")
+
+I = []
+for x in name:
+    if x.isupper():
+        I.append(x)
+
+print(".".join(I)+".")
