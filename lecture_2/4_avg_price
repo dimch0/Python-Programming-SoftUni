@@ -1,0 +1,26 @@
+entering = True
+prices = []
+while entering:
+    price = input("Enter a price (or 'stop'): ")
+    if price.lower() == "stop":
+        entering = False
+    elif price.replace('.', '').isdigit():
+        prices.append(float(price))
+    else:
+        print("'{}' is not a valid price".format(price))
+
+max_price = max(prices)
+min_price = min(prices)
+min_max_values = []
+
+for x in prices:
+    if x in [max_price, min_price]:
+        min_max_values.append(x)
+
+prices = list(set(prices).difference(set(min_max_values)))
+
+if len(prices) > 0:
+    result = sum(prices) / len(prices)
+    print("{:.2f}".format(result))
+else:
+    print("No other values, but max and min.")
