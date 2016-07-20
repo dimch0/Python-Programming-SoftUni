@@ -1,11 +1,13 @@
 entering = True
+entries = 0
 prices = []
 while entering:
     price = input("Enter a price (or 'stop'): ")
-    if price.lower() == "stop":
+    if price.lower() == "stop" and not entries < 4:
         entering = False
     elif price.replace('.', '').isdigit():
         prices.append(float(price))
+        entries += 1
     else:
         print("'{}' is not a valid price".format(price))
 
