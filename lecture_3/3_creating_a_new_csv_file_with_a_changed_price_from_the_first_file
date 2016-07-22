@@ -1,0 +1,19 @@
+catalog_file_path = "D:/pyt/SoftUni Python Programming/lecture_3/catalog_full.csv"
+sample_file_path = "D:/pyt/SoftUni Python Programming/lecture_3/catalog_sample.csv"
+new_file = "D:/pyt/SoftUni Python Programming/lecture_3/new_prices.csv"
+
+with open(sample_file_path) as f:
+    with open(new_file, 'a') as w:
+
+        Lines = f.readlines()
+        for line in Lines:
+
+            old_price = float(line.replace("\n", '').split(',')[-1])
+            new_price = old_price + (old_price * (75 / 100))
+
+            items_without_price = str(",".join(line.replace("\n", '').split(',')[0:-1]))
+
+            w.write(items_without_price)
+            w.write(",")
+            w.write(str(new_price))
+            w.write("\n")
