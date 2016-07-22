@@ -1,0 +1,10 @@
+catalog_file_path = "D:/pyt/SoftUni Python Programming/lecture_3/catalog_full.csv"
+sample_file_path = "D:/pyt/SoftUni Python Programming/lecture_3/catalog_sample.csv"
+
+prices = []
+
+with open(catalog_file_path, encoding='utf-8') as f:
+    for line in f:
+        prices.append(float(line.replace("\n", '').split(',')[-1]))
+
+print("{:.2f}".format(sum(prices) / len(prices)))
