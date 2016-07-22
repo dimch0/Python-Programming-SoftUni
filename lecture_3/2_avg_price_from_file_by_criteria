@@ -1,0 +1,46 @@
+catalog_file_path = "D:/pyt/SoftUni Python Programming/lecture_3/catalog_full.csv"
+sample_file_path = "D:/pyt/SoftUni Python Programming/lecture_3/catalog_sample.csv"
+
+
+Men = [0, 0, "Men"]
+Woman = [0, 0, "Women"]
+Infant = [0, 0, "Infants"]
+Kid = [0, 0, "Kids"]
+Unisex = [0, 0, "Unisex"]
+
+
+with open(catalog_file_path, encoding='utf-8') as f:
+
+    for line in f:
+
+        gender = line.replace("\n", '').split(',')[-2]
+        price = float(line.replace("\n", '').split(',')[-1])
+
+        if gender == "Unisex":
+            Unisex[0] += price
+            Unisex[1] += 1
+        elif gender == "Men":
+            Men[0] += price
+            Men[1] += 1
+        elif gender == "Woman":
+            Woman[0] += price
+            Woman[1] += 1
+        elif gender == "Infant":
+            Infant[0] += price
+            Infant[1] += 1
+        elif gender == "Kid":
+            Kid[0] += price
+            Kid[1] += 1
+
+def calculate_avg_price(category):
+    sum_of_prices = category[0]
+    amount = category[1]
+    avg_price = sum_of_prices / amount
+    category_name = category[2]
+    print("{}: {:.2f}".format(category_name, avg_price))
+
+calculate_avg_price(Men)
+calculate_avg_price(Woman)
+calculate_avg_price(Infant)
+calculate_avg_price(Kid)
+calculate_avg_price(Unisex)
