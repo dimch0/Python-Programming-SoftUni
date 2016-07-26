@@ -1,0 +1,16 @@
+import os
+import sys
+
+searched_dir = str(sys.argv[1])
+searched_file = str(sys.argv[2])
+
+found_file = False
+
+for dirpath, dirnames, filenames in os.walk(searched_dir):
+    for name in filenames:
+        if searched_file == name:
+            found_file = True
+            print(os.path.join(dirpath, searched_file))
+
+if not found_file:
+    print("File {} not found in {}".format(searched_file, searched_dir))
