@@ -1,0 +1,28 @@
+import iso8601
+import csv
+
+filename = "sales.csv"
+
+date_vs_sales = {}
+
+with open(filename) as f:
+    reader = csv.reader(f)
+    for line in reader:
+
+        price = float(line[1])
+        dt = iso8601.parse_date(line[0])
+        date_to_hour = dt.replace(minute=0, second=0, microsecond=0)
+
+        if str(date_to_hour) not in date_vs_sales:
+            date_vs_sales[str(date_to_hour)] = 0
+        else:
+            date_vs_sales[str(date_to_hour)] += price
+
+max_sales = [float(0.0), None]
+for date_time, sales in date_vs_sales.items():
+    if date_vs_sales[date_time] > max_sales[0]:
+        max_sales[0] = date_vs_sales[date_time]
+        max_sales[1] = date_time
+
+print("hour with most sales:",max_sales[1][11:13])
+
