@@ -1,0 +1,71 @@
+"""
+Въведете дата: 2016-02-04
+Въведете валута: GBP
+Въведете сума: 15.34
+Въведете валута, към която да се конвертира: EUR
+
+Равностойност в EUR: 20.03
+"""
+
+import requests
+
+
+
+def main():
+
+    API_URL = 'http://api.fixer.io/latest'
+    rates, BASE_CUR = get_rates_and_base(API_URL)
+    AMOUNT = get_amount()
+    CURRENCY, exchange_rate = get_currency_and_exchange_rate(rates)
+    print_result(AMOUNT, exchange_rate, BASE_CUR)
+
+def get_rates_and_base(api_url):
+    """
+
+    Returns: (rates:dict, BASE_CUR: str)
+
+    """
+    BASE_CUR = None
+    while not BASE_CUR:
+        try:
+            BASE_CUR = input("Въведете валута, към която да се конвертира: ")
+            BASE_CUR = BASE_CUR.upper()
+            response = requests.get(api_url, timeout=2.5, params={'base': BASE_CUR})
+            rates = (response.json()["rates"])
+            return rates, BASE_CUR
+        except Exception as e:
+            BASE_CUR = None
+            print("Server Error", response.status_code, str(e))
+            print("Possible Error: unexpected currency")
+
+
+def get_amount():
+    AMOUNT = None
+    while not AMOUNT:
+        try:
+            AMOUNT = float(input("Въведете сума: "))
+            return AMOUNT
+        except:
+            print("Please enter amount of money!")
+
+def get_currency_and_exchange_rate(rates: dict):
+    currency = None
+    while not currency:
+        currency = input("Въведете валута: ")
+        currency = currency.upper()
+        exchange_rate = rates.get(currency, None)
+        if currency not in rates:
+            currency = None
+            print("Currency {}, not supported.".format(currency))
+
+    return currency, exchange_rate
+
+
+def print_result(AMOUNT, exchange_rate, base):
+    result = AMOUNT / exchange_rate
+    print("Равностойност в {base}: {result:.2f}".format(
+        base=base,
+        result=result))
+
+if __name__ == '__main__':
+    main()
