@@ -1,0 +1,27 @@
+"""
+колко картинки има на страницата
+"""
+
+import requests
+
+TARGET_URL = 'http://dzhrt.tumblr.com/'
+IMAGE_TAG = "<img"
+
+response = requests.get(TARGET_URL,
+                        params={'query': 'BGN'}
+                        )
+
+# print(response.status_code)
+# print(response.text)
+# pprint(response.json())
+
+response_text = response.text
+images_count = 0
+found_index = 0
+while found_index != -1:
+    found_index = response_text.find(IMAGE_TAG, found_index)
+    if found_index != -1:
+        images_count += 1
+        found_index += 1
+
+print(images_count)
