@@ -1,0 +1,60 @@
+"""
+Въведете град: Sofia
+
+Информация към: 04.02.2016 18:00
+Температура:
+Налягане: 1015
+Влажност: 90%
+Вятър: 7.7 м/с
+"""
+
+import requests
+import ast
+import pytz
+from datetime import datetime
+
+API_URL = "http://api.openweathermap.org/data/2.5/weather"
+APPID = "965acdac1ae64cf06761bb563ad34d96"
+
+
+def main():
+
+    city = input("Въведете град: ")
+    result = weather_info(city)
+    print_result(result)
+
+
+def weather_info(city: str, api_url: str=API_URL, appid=APPID):
+    try:
+        response = requests.get(api_url, timeout=2.5, params={'q': city, 'appid': appid})
+        response = ast.literal_eval(response.text)
+        return response
+    except Exception as e:
+        print("Error,", str(e))
+
+def print_result(result):
+
+    ts = datetime.fromtimestamp(int(result['dt']))
+    ts = ts.replace(tzinfo=pytz.utc)
+    temp = result['main']['temp']
+    pressure = result['main']['pressure']
+    humidity = result['main']['humidity']
+    wind = result['wind']['speed']
+
+    print(result.get("name"))
+    print("""
+Информация към: {date}
+Температура: {temp}
+Налягане: {pressure}
+Влажност: {humidity}%
+Вятър: {wind} м/с""".format(
+        date=ts,
+        temp=temp,
+        pressure=pressure,
+        humidity=humidity,
+        wind=wind
+    ))
+
+
+if __name__ == '__main__':
+    main()
