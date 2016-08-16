@@ -1,0 +1,30 @@
+import csv
+
+file_name = "packages.txt"
+
+
+def main():
+    try:
+        w = float(input("w: "))
+        h = float(input("h: "))
+        d = float(input("d: "))
+    except:
+        print("INVALID INPUT")
+
+    box = (w, h, d)
+    box = sorted(box)
+
+    with open(file_name, encoding='utf-8') as f:
+        reader = list(csv.reader(f))
+        for line in reader:
+            drug_size = []
+            if line:
+                drug_size.append(float(line[1]))
+                drug_size.append(float(line[2]))
+                drug_size.append(float(line[3]))
+                drug_size = sorted(drug_size)
+                if box[0] >= drug_size[0] and box[1] >= drug_size[1] and box[2] > drug_size[2]:
+                    print(line[0])
+
+if __name__ == '__main__':
+    main()
