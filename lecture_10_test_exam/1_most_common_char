@@ -1,0 +1,11 @@
+import collections
+
+def main():
+    input_string = input("ВХОД: ")
+    if input_string and not input_string.isspace():
+        print(collections.Counter(input_string).most_common(1)[0][0])
+    else:
+        print("INVALID INPUT")
+
+if __name__ == '__main__':
+    main()
