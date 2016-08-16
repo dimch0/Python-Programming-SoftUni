@@ -1,0 +1,19 @@
+import math
+
+def main():
+    a = input("a: ")
+    b = input("b: ")
+    c = input("c: ")
+    try:
+        a = float(a)
+        b = float(b)
+        c = float(c)
+        p = (a + b + c) / 2
+        s = math.sqrt(p * (p - a) * (p - b) * (p - c))
+        print("{:.2f}".format(s))
+
+    except Exception as e:
+        print("INVALID INPUT")
+
+if __name__ == '__main__':
+    main()
