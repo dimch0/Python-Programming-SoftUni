@@ -1,0 +1,29 @@
+import csv
+
+input_id = input()
+SALES_FILENAME = input()
+
+COLUMN_ITEM_ID = 0
+COLUMN_COUNTRY = 1
+COLUMN_CITY = 2
+COLUMN_TS = 3
+COLUMN_PRICE = 4
+
+
+def main():
+    min_price = None
+    result = None
+    with open(SALES_FILENAME, 'r', encoding='utf-8') as f:
+        reader = csv.reader(f)
+        for row in reader:
+            sale_id = row[COLUMN_ITEM_ID]
+            city = row[COLUMN_CITY]
+            sale_price = float(row[COLUMN_PRICE])
+            if sale_id == input_id:
+                if not min_price or min_price > sale_price:
+                    min_price = sale_price
+                    result = city
+    print(result)
+
+if __name__ == '__main__':
+    main()
