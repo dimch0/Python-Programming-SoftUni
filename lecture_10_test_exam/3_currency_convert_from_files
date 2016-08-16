@@ -1,0 +1,30 @@
+rates_file_name = "exchange.txt"
+amounts_file_name = "amounts.txt"
+
+def main():
+    rates = {}
+    with open(rates_file_name, encoding='utf-8') as f:
+        for line in f:
+            if not line.isspace():
+                line = line.split()
+                cur = line[0]
+                value = float(line[1])
+                rates[cur] = value
+
+    for a in calculating_amounts_in_bgn(rates):
+        print("{:.2f}".format(a))
+
+
+def calculating_amounts_in_bgn(rates):
+    with open(amounts_file_name, encoding='utf-8') as a:
+        for line in a:
+            if not line.isspace():
+                line = line.split()
+                amount = float(line[0])
+                curr = line[1]
+                for cur, value in rates.items():
+                    if cur == curr:
+                        yield amount / value
+
+if __name__ == '__main__':
+    main()
