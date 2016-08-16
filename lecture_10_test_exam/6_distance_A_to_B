@@ -1,0 +1,25 @@
+import csv
+
+filename = "car.txt"
+
+def main():
+    time = 0
+    completing = True
+    with open(filename, encoding='utf-8') as f:
+        reader = csv.reader(f)
+        for row in reader:
+            try:
+                s = float(row[1]) - float(row[0]) + 1
+                v = float(row[2])
+                if s != 0:
+                    t = s / v
+                time += t
+            except Exception as e:
+                completing = False
+                print("INVALID INPUT")
+
+    if completing:
+        print("{:.2f}".format(time))
+
+if __name__ == '__main__':
+    main()
