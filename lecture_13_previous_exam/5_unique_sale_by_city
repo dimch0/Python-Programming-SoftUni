@@ -1,0 +1,56 @@
+import os
+import os.path
+import csv
+import operator
+from pprint import pprint
+
+
+
+COLUMN_ITEM_ID = 0
+COLUMN_COUNTRY = 1
+COLUMN_CITY = 2
+COLUMN_TS = 3
+COLUMN_PRICE = 4
+
+
+def main():
+    file_name = input()
+    if os.path.isfile(file_name) and os.stat(file_name).st_size > 0:
+        try:
+            item_vs_city = {}
+            with open(file_name, 'r', encoding='utf-8') as f:
+                reader = csv.reader(f)
+                for row in reader:
+                    if len(row) >= 3:
+                        sale_id = row[COLUMN_ITEM_ID]
+                        city = row[COLUMN_CITY]
+
+                        if sale_id not in item_vs_city:
+                            item_vs_city[sale_id] = [city]
+                        elif city not in item_vs_city[sale_id]:
+                            item_vs_city[sale_id].append(city)
+
+            unique_item_vs_city = {i: item_vs_city[i] for i in item_vs_city if len(item_vs_city[i]) == 1}
+
+            result = {}
+            for item, city in unique_item_vs_city.items():
+                if city[0] not in result:
+                    result[city[0]] = [item]
+                else:
+                    result[city[0]].append(item)
+
+            if result:
+                result_sorted = sorted(result.items(), key=operator.itemgetter(0))
+                for r in result_sorted:
+                    items = str(",".join(sorted(r[1])))
+                    print(",".join((r[0], items)))
+            else:
+                print("NO UNIQUE SALES")
+
+        except:
+            print("INVALID INPUT")
+    else:
+        print("INVALID INPUT")
+
+if __name__ == '__main__':
+    main()
