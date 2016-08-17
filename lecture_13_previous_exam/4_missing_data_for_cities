@@ -1,0 +1,52 @@
+import os
+import csv
+import operator
+
+def main():
+    filename = input()
+    #filename = "miss.csv"
+    all_cities = []
+    content = {}  # key = timestamp, value = {}, where key= city, value = temp
+    try:
+        with open(filename, encoding="utf-8") as f:
+            reader = list(csv.reader(f))
+            for line in reader:
+                if line:
+                    temp = None
+                    ts = line[0]  # iso8601.parse_date(line[0])
+                    city = line[1]
+                    if len(line) > 2:
+                        temp = float(line[2])
+                    if city not in all_cities:
+                        all_cities.append(city)
+                    if ts not in content:
+                        content[ts] = [city]
+                    elif not temp == None:
+                        content[ts].append(city)
+
+        all_cities = sorted(all_cities)
+        content_sorted = sorted(content.items(), key=operator.itemgetter(0))
+
+        all_data_available = True
+        for x in content_sorted:
+            ts = x[0]
+            s = set(all_cities)
+            t = set(x[1])
+            d = s.difference(t)
+            d = str(",".join(sorted(list(d))))
+            if d:
+                print(",".join((ts, d)))
+                all_data_available = False
+        if all_data_available and os.stat(filename).st_size > 0:
+            print("ALL DATA AVAILABLE")
+        elif os.stat(filename).st_size == 0:
+            print("INVALID INPUT")
+
+    except Exception as e:
+        #print(e)
+        print("INVALID INPUT")
+
+
+
+if __name__ == '__main__':
+    main()
