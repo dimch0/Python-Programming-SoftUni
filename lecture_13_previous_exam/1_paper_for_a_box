@@ -1,0 +1,13 @@
+import math
+
+bottle = float(1.76)
+try:
+    paper_size = float(input())
+    W = float(input())
+    H = float(input())
+    L = float(input())
+    face = 2 * ((L * H) + (W * H) + (W * L))
+    face += face * 9.8 / 100
+    print(math.ceil(face / paper_size))
+except:
+    print("INVALID INPUT")
