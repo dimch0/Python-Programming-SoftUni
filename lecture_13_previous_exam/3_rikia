@@ -1,0 +1,43 @@
+import math
+import csv
+import operator
+
+
+def main():
+
+    liters = input()
+    filename = input()
+    result = {}
+    try:
+        liters = float(liters) * 1000
+        if liters > 0:
+            with open(filename, encoding="utf-8") as f:
+                reader = csv.reader(f)
+                for line in reader:
+                    if line:
+                        if len(line) == 3:
+                            name = line[0]
+                            r = float(line[1])
+                            h = float(line[2])
+                            vol = volume(r, h)
+                            if vol > liters:
+                                if name not in result:
+                                    result[name] = vol
+
+                result_sorted = sorted(result.items(), key=operator.itemgetter(1))
+                if result_sorted:
+                    print(result_sorted[0][0])
+                else:
+                    print("NO SUITABLE CONTAINER")
+        else:
+            print("INVALID INPUT")
+#   1 cm³ = 0.001 dm³
+    except:
+        print("INVALID INPUT")
+
+
+def volume(r, h):
+    return math.pi * r ** 2 * h
+
+if __name__ == '__main__':
+    main()
