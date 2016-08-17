@@ -1,0 +1,42 @@
+import os
+
+def main():
+    doable = True
+    try:
+        filename = input()
+        X = float(0.0)
+        Y = float(0.0)
+    except:
+        doable = False
+
+    if doable:
+        with open(filename, encoding="utf-8") as f:
+            for line in f:
+                if not line.isspace():
+                    try:
+                        line = line.split()
+                        dir = line[0]
+                        val = float(line[1])
+                        if dir == "right":
+                            X += val
+                        elif dir == 'left':
+                            X -= val
+                        elif dir == 'down':
+                            Y -= val
+                        elif dir == 'up':
+                            Y += val
+                        else:
+                            doable = False
+
+                    except:
+                        doable = False
+
+    if doable and os.stat(filename).st_size > 0:
+        print("X {:.3f}".format(X))
+        print("Y {:.3f}".format(Y))
+    else:
+        print("INVALID INPUT")
+
+
+if __name__ == '__main__':
+    main()
