@@ -1,0 +1,10 @@
+import math
+
+bottle = float(1.76)
+try:
+    W = float(input("W: "))
+    H = float(input("H: "))
+    wall = W * H
+    print(math.ceil(wall / bottle))
+except:
+    print("INVALID INPUT")
