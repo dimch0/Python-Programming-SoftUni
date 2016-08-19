@@ -1,0 +1,38 @@
+import os
+import os.path
+import csv
+import operator
+from pprint import pprint
+
+err = "INVALID INPUT"
+
+
+def main():
+    file_name = str(input())
+
+
+    if os.path.isfile(file_name) and os.stat(file_name).st_size > 0:
+
+        try:
+            word = str(input())
+            anagrams = []
+            with open(file_name, encoding="utf-8") as f:
+                # words = [line.strip() for line in f]
+                for row in f:
+                    row = row.strip()
+                    #row = str("".join(row)).replace('\n', "")
+                    if row != word and sorted(row) == sorted(word):
+                        anagrams.append(row)
+
+            if not anagrams == []:
+                print("\n".join(sorted(anagrams)))
+            else:
+                print("NO ANAGRAMS")
+
+        except:
+            print(err)
+    else:
+        print(err)
+
+if __name__ == '__main__':
+    main()
