@@ -1,0 +1,53 @@
+import os
+from urllib.parse import urlparse
+
+err = "INVALID INPUT"
+
+
+def main():
+
+    file_name = input()
+    max_url = None
+    max_time = None
+    urls_vs_time_and_count = {}  # dict key = url, value = list: [sum of times, count]
+
+    if os.path.isfile(file_name) and os.stat(file_name).st_size > 0:
+        try:
+            with open(file_name, encoding="utf-8") as f:
+                for row in f:
+                    if row:
+                        row = row.replace('"', "").split(" ")
+
+                        url = row[4].replace('url=', "")
+                        url = urlparse(url).path
+
+                        time = row[-2]
+                        time = time.replace('resp_t=', "")
+                        time = float(time)
+
+                        if not url.endswith("ws/"):
+                            if url not in urls_vs_time_and_count:
+                                urls_vs_time_and_count[url] = [time, int(1)]
+                            else:
+                                urls_vs_time_and_count[url][0] += time
+                                urls_vs_time_and_count[url][1] += 1
+
+            for url, time in urls_vs_time_and_count.items():
+                avg_time = float(time[0] / time[1])
+                if max_time is None:
+                    max_time = avg_time
+                    max_url = url
+                elif max_time < avg_time:
+                    max_time = avg_time
+                    max_url = url
+
+            print(max_url)
+            print("{:.3f}".format(max_time))
+
+        except Exception as e:
+            print(err, e)
+    else:
+        print(err)
+
+if __name__ == '__main__':
+    main()
