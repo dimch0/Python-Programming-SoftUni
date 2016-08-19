@@ -1,1 +1,34 @@
-...
+
+err = "INVALID INPUT"
+alphabet = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
+new_alphabet = []
+
+def main():
+    try:
+        input_key = int(input())
+        k = input_key % len(alphabet)
+
+        input_string = str(input())
+        result = []
+        new_alphabet = alphabet[k:] + alphabet[:k]
+
+        for ch in input_string:
+            new_idx = None
+            if ch in alphabet:
+                for idx, l in enumerate(alphabet):
+                    if ch == l:
+                        new_idx = idx
+                result.append(new_alphabet[new_idx])
+            else:
+                result.append(ch)
+
+        print("".join(result))
+
+    except Exception as e:
+        print(err)
+
+
+
+
+if __name__ == '__main__':
+    main()
